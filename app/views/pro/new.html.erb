@@ -1,26 +1,49 @@
 <div class="container">
-  <div class="row">
+
+  <div class="form-signin">
     <div class="col-md-12 text-center">
-      <h4>These are the services you provide</h4>
+      <h4>These are the services you  provide</h4>
+      <ul>
         <% @services.each do |service| %>
-          <%= service.name %><br>
-        <% end %> <br> <br>
-      <h2>Create your account</h1>
+        <li><%= service.name %><br></li>
+        <% end %> <br>
+      </ul>
     </div>
   </div>
+
+  <div class="col-md-12 text-center">
+    <h2>Create your account</h1>
+  </div>
+
   <div class="form-signin">
     <%= bootstrap_form_for(@pro, url: pro_index_path, method: :post) do |f| %>
       <h4>Account Info</h4>
       <%= f.text_field :first_name, placeholder: "First Name", id: "first_name"%>
       <%= f.text_field :last_name, placeholder: "Last Name", id: "last_name"%>
-      <%= f.text_field :zipcode, placeholder: 'Enter Zip Code', id: "zip_code"%>
       <%= f.text_field :phone_number, placeholder: 'Enter Phone Number', id: "phone_number"%>
       <%= f.text_field :email, placeholder: "Email", id: "email"%>
       <%= f.password_field :password, placeholder: "Password" %>
       <%= f.password_field :password_confirmation, placeholder: "Confirm Password" %>
-      <%= f.submit "Create Account", class: "btn login btn-primary" %>
-    <%end%> <br>
+<!-- need to extract zip and radius from below zip/radius to call to map and display accordingly -->
+      <div class="">
+        <%= f.text_field :zipcode, placeholder: 'Enter Zip Code', id: "zip_code"%>
+        How far are you willing to travel for a job?
+        <input placeholder="Enter Travel Radius" id="radius" class="form-control" type="text">
+        <p></p>
+        <iframe
+          style="border-radius: 10px;"
+          class="card-image"
+          width="100%"
+          height="300"
+          frameborder="0" style="border:0"
+          src="https://dabrownstein.files.wordpress.com/2013/08/footprints-of-actively-burning-fires-google-map.jpg?w=500&h=279">
+  <!-- 500x280 image -->
+        </iframe>
+      </div>
 
-    <%= link_to "Sign Up With Facebook", facebook_login_path, class: "btn login btn-primary" %>
-  </div>
+    <%= f.submit "Create Account", class: "btn login btn-primary" %>
+  <%end%> <p></p>
+  <%= link_to "Sign Up With Facebook", facebook_login_path, class: "btn login btn-primary" %>
 </div>
+
+  <!-- javascript_include_tag(map.js) -->

@@ -229,7 +229,7 @@ body {
 */
 
 .form-signin {
-  max-width: 400px;
+  max-width: 600px;
   padding: 40px;
   margin: 0 auto;
   border: 1px solid #E1E3E3;
@@ -286,3 +286,23 @@ body {
   background-color: #FAFAFA;
 }
 
+/**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Map Display of work radius
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+
+.ZipRadiusMapContainer {
+  max-width: 600px;
+  padding: 40px;
+  margin: 0 auto;
+  border: 1px solid #E1E3E3;
+  border-radius: 4px;
+  margin-top: 40px;
+}
+
+.MapDisplayContainer {
+  color: black;
+
+}
