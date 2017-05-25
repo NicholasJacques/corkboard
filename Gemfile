@@ -21,7 +21,7 @@ gem 'figaro'
 gem 'bcrypt'
 gem 'twilio-ruby'
 gem 'geocoder'
-
+gem 'passenger'
 
 
 group :test do

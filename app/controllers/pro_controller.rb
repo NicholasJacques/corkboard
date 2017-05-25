@@ -4,6 +4,7 @@ class ProController < ApplicationController
   end
 
   def new
+    @oauth_info = OauthParse.new(session[:omniauth_info])
     @services = Service.where(id: params[:service_id])
     @radius = params[:radius]
     session[:radius] = params[:radius]
@@ -13,14 +14,18 @@ class ProController < ApplicationController
 
   def create
     @pro = Pro.new(pro_params)
+    @pro.uid = session[:omniauth_info]['uid'] if omniauth_user
     @pro.create_pro_service(service_ids: session[:service_ids], radius: session[:radius])
 
     if @pro.save
+      ConfirmationSender.send_confirmation_to(@pro)
       session[:user_id] = @pro.id
       session.delete(:service_ids)
       session.delete(:radius)
       flash["success"] = "Logged in as #{@pro.full_name}."
       redirect_to pro_dashboard_path
+      session.delete(:omniauth_info)
+      redirect_to twilio_confirmation_path
     else
       flash.now[:danger] = @pro.errors.full_messages
       render :new
@@ -28,6 +33,7 @@ class ProController < ApplicationController
   end
 
   private
+
 
   def pro_params
     params.require(:pro).permit(:first_name,

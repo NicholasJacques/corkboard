@@ -10,7 +10,5 @@ module MessageSender
       to:    phone_number,
       body:  code
     )
-
-    message.status == 'queued'
   end
 end

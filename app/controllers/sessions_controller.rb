@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+
+
   def new
   end
 
@@ -18,15 +20,29 @@ class SessionsController < ApplicationController
     request.env["omniauth.auth"]
   end
 
+  def pro_oauth?
+    request.env["omniauth.params"]["user_type"] == "pro"
+  end
+
   def oauth_login(user)
    if user && user.new_record?
      session[:omniauth_info] = oauth_info
-     redirect_to register_path
+     register_redirect(user)
    else
      session[:user_id] = user.id
      session[:authenticated] = true
-     redirect_to profile_dashboard_path
+     user_redirect(user)
    end
+  end
+
+  def register_redirect(user)
+    if pro_oauth?
+      redirect_to new_pro_path(:service_id =>  session[:service_ids])
+      flash[:info] = oauth_form
+    else
+      redirect_to register_path
+      flash[:info] = oauth_form
+    end
   end
 
 
@@ -34,9 +50,9 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       session[:user_id] = user.id
       session[:authenticated] = true
-      redirect_to profile_dashboard_path
+      user_redirect(user)
     else
-      flash.now[:danger] =  "Incorrect e-mail and password combination."
+      flash.now[:danger] = incorrect_email_password
       render :new
     end
   end

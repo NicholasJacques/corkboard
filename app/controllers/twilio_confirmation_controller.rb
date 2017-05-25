@@ -5,13 +5,20 @@ class TwilioConfirmationController < ApplicationController
   end
 
   def create
-    if current_user.is_valid_code?(params[:code_verification][:code])
+    if current_user.is_valid_code?(code_params[:code])
       session[:authenticated] = true
-      redirect_to profile_dashboard_path
+      flash["success"] = "Logged in as #{current_user.full_name}."
+      user_redirect(current_user)
     else
-      flash.now[:danger] = "The code you entered was not valid."
+      flash.now[:danger] = invalid_code
       render :new
     end
+  end
+
+  private
+
+  def code_params
+    params.require(:code_verification).permit(:code)
   end
 
 end
