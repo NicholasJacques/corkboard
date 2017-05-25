@@ -13,7 +13,6 @@ class ProController < ApplicationController
 
   def create
     @pro = Pro.new(pro_params)
-    require "pry"; binding.pry
     @pro.create_pro_service(service_ids: session[:service_ids], radius: session[:radius])
 
     if @pro.save

@@ -43,6 +43,7 @@ RSpec.describe "Guest can create Pro Process" do
     find(:css, "#service_id_[value='1']").set(true)
     find(:css, "#service_id_[value='2']").set(true)
     find(:css, "#service_id_[value='3']").set(false)
+    fill_in "radius", with: "8"
 
     click_on 'Submit'
     expect(current_path).to eq('/pro/new')
@@ -55,7 +56,6 @@ RSpec.describe "Guest can create Pro Process" do
     fill_in "pro[last_name]", with: "Schwarzenegger"
     fill_in "pro[phone_number]", with: "8085559111"
     fill_in "pro[zipcode]", with: "79720"
-    fill_in "pro[radius]", with: "8"
     fill_in "pro[email]", with: "arny22@gmail.com"
     fill_in "pro[password]", with: "hunter2"
     fill_in "pro[password_confirmation]", with: "hunter2"

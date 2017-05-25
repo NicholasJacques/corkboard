@@ -20,6 +20,7 @@ gem 'omniauth-facebook'
 gem 'figaro'
 gem 'bcrypt'
 gem 'twilio-ruby'
+gem 'geocoder'
 
 
 
