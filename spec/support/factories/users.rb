@@ -16,6 +16,7 @@ FactoryGirl.define do
       email Faker::Internet.email
       type "Pro"
       roles { [build(:pro), build(:customer)] }
+      radius Faker::Number.between(1, 10)
     end
   end
 end

@@ -1,20 +1,25 @@
 class ProController < ApplicationController
-  def show 
+  def show
     @pro = Pro.find(current_user.id)
   end
 
   def new
     @services = Service.where(id: params[:service_id])
+    @radius = params[:radius]
+    session[:radius] = params[:radius]
     session[:service_ids] = Service.pro_service_ids(params[:service_id])
     @pro = Pro.new
   end
 
   def create
     @pro = Pro.new(pro_params)
-    @pro.create_pro_service[:service_ids] = session[:service_ids]
+    require "pry"; binding.pry
+    @pro.create_pro_service(service_ids: session[:service_ids], radius: session[:radius])
+
     if @pro.save
       session[:user_id] = @pro.id
       session.delete(:service_ids)
+      session.delete(:radius)
       flash["success"] = "Logged in as #{@pro.full_name}."
       redirect_to pro_dashboard_path
     else

@@ -6,7 +6,10 @@
       <ul>
         <% @services.each do |service| %>
         <li><%= service.name %><br></li>
-        <% end %> <br>
+        <% end %>
+      <h4>And the distance you are willing to travel to perform them</h4>
+        <%= @radius %> Miles
+           <br>
       </ul>
     </div>
   </div>
@@ -23,20 +26,10 @@
       <%= f.text_field :phone_number, placeholder: 'Enter Phone Number', id: "phone_number"%>
       <%= f.text_field :email, placeholder: "Email", id: "email"%>
       <%= f.text_field :zipcode, placeholder: 'Enter Zip Code', id: "zip_code"%>
-      <%= f.text_field :radius, placeholder: 'Your desired work radius', id: "radius"%>
       <%= f.password_field :password, placeholder: "Password" %>
       <%= f.password_field :password_confirmation, placeholder: "Confirm Password" %>
 
       <div class="ZipRadiusMapContainer">
-
-        To set a range for your services enter your zipcode here
-         <input placeholder="Enter zipcode" id="zip" max="99999" class="form-control" type="text">
-          <p></p>
-        How far are you willing to travel for a job?
-          <input placeholder="Enter Travel Radius" id="radius" max="50" class="form-control" type="text">
-            <p></p>
-        <button type="button" name="button">Click to see map</button>
-        <p></p>
 
         <div id='map'>
         </div>
@@ -60,8 +53,6 @@
         src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["google_api_key"] %>&callback=initMap">
         </script>
   </div>
-  <br>
-
 
 
 

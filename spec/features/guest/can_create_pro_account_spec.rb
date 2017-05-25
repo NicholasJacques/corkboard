@@ -55,6 +55,7 @@ RSpec.describe "Guest can create Pro Process" do
     fill_in "pro[last_name]", with: "Schwarzenegger"
     fill_in "pro[phone_number]", with: "8085559111"
     fill_in "pro[zipcode]", with: "79720"
+    fill_in "pro[radius]", with: "8"
     fill_in "pro[email]", with: "arny22@gmail.com"
     fill_in "pro[password]", with: "hunter2"
     fill_in "pro[password_confirmation]", with: "hunter2"
