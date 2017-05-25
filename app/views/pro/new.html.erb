@@ -2,7 +2,7 @@
 
   <div class="form-signin">
     <div class="col-md-12 text-center">
-      <h4>These are the services you  provide</h4>
+      <h4>These are the services you provide</h4>
       <ul>
         <% @services.each do |service| %>
         <li><%= service.name %><br></li>
@@ -22,28 +22,54 @@
       <%= f.text_field :last_name, placeholder: "Last Name", id: "last_name"%>
       <%= f.text_field :phone_number, placeholder: 'Enter Phone Number', id: "phone_number"%>
       <%= f.text_field :email, placeholder: "Email", id: "email"%>
+      <%= f.text_field :zipcode, placeholder: 'Enter Zip Code', id: "zip_code"%>
+      <%= f.text_field :radius, placeholder: 'Your desired work radius', id: "radius"%>
       <%= f.password_field :password, placeholder: "Password" %>
       <%= f.password_field :password_confirmation, placeholder: "Confirm Password" %>
-<!-- need to extract zip and radius from below zip/radius to call to map and display accordingly -->
-      <div class="">
-        <%= f.text_field :zipcode, placeholder: 'Enter Zip Code', id: "zip_code"%>
-        How far are you willing to travel for a job?
-        <input placeholder="Enter Travel Radius" id="radius" class="form-control" type="text">
-        <p></p>
-        <iframe
-          style="border-radius: 10px;"
-          class="card-image"
-          width="100%"
-          height="300"
-          frameborder="0" style="border:0"
-          src="https://dabrownstein.files.wordpress.com/2013/08/footprints-of-actively-burning-fires-google-map.jpg?w=500&h=279">
-  <!-- 500x280 image -->
-        </iframe>
-      </div>
 
-    <%= f.submit "Create Account", class: "btn login btn-primary" %>
+      <div class="ZipRadiusMapContainer">
+
+        To set a range for your services enter your zipcode here
+         <input placeholder="Enter zipcode" id="zip" max="99999" class="form-control" type="text">
+          <p></p>
+        How far are you willing to travel for a job?
+          <input placeholder="Enter Travel Radius" id="radius" max="50" class="form-control" type="text">
+            <p></p>
+        <button type="button" name="button">Click to see map</button>
+        <p></p>
+
+        <div id='map'>
+        </div>
+
+        <script>
+
+            function initMap() {
+            var location = {lat: 40.0, lng: -105.27};
+            var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 12,
+              center: location
+            });
+            var marker = new google.maps.Marker({
+              position: location,
+              map: map
+            });
+          }
+        </script>
+
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["google_api_key"] %>&callback=initMap">
+        </script>
+  </div>
+  <br>
+
+
+
+
+
+
+
+  <%= f.submit "Create Account", class: "btn login btn-primary" %>
   <%end%> <p></p>
   <%= link_to "Sign Up With Facebook", facebook_login_path, class: "btn login btn-primary" %>
 </div>
-
-  <!-- javascript_include_tag(map.js) -->
+</div>
